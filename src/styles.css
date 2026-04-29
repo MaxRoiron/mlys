@@ -40,6 +40,12 @@ body {
   justify-content: center;
 }
 
+.text_title {
+  font-size: 50px;
+  text-align: center;
+  color: var(--accent);
+}
+
 /* ───── Page wrapper (for transitions) ───── */
 .page {
   position: absolute;
@@ -148,8 +154,24 @@ body {
   margin-top: 36px;
   width: 100%;
   max-width: 480px;
+  font-size: 26px;
 }
 
+.images-row {
+  display: flex;
+  justify-content: space-between; /* gauche / droite */
+  align-items: center; /*alignement vertical */
+  width: 100%;
+  padding: 0 40px;
+}
+
+.images-row img:first-child {
+  width: 400px;
+}
+
+.images-row img:last-child {
+  width: 400px;
+}
 /* ───── Mobile responsive ───── */
 @media (max-width: 600px) {
   .arrow-btn {
