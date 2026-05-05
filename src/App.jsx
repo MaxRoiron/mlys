@@ -27,7 +27,7 @@ const quizQuestions = [
     choices: ["Sous vody puff 25k PURPLE WAVE tasty crousty", 
       "Du vin", "Du vin Blanc", "Du vin rouge", "Du vin rosé", "Du vin jaune", "Du vin gris", "ok j'arrête", "De la bière", "JÄGER BOMBA LATINA"],
     answer: 0,
-    reponse: "Dans la france à macron???"
+    reponse: "Toujours su qu t'étais alcoolique, SALE ALCOOLIQUE"
   },
   {
     question: "Question 5\nQuel est ton animal préféré ?",
@@ -48,7 +48,7 @@ const quizQuestions = [
     image: "photos/code_route.jpg",
     choices: ["Ralentis", "Garde mon allure", "J'accèlere", "J'ai même pas mon code qu'est ce que tu me racontes fdp"],
     answer: 3,
-    reponse: "ÉBÉDIDONK"
+    reponse: "ouais je commence à manquer d'inspi la"
   },
   {
     question: "C'est la question CO ! C'est la question QUINE !\nC'est la Queeeessssstioooon COOOOO QUINEEEE!!\nTu préfères...?",
@@ -60,7 +60,7 @@ const quizQuestions = [
     question: "Question 10\nQuelle prénom choisirais-tu pour notre futur chat ?",
     choices: ["Tulip", "Pignouf", "MÉGATRON", "Salaud"],
     answer: 2,
-    reponse: "par pitié on l'appel MÉGATRON stp stp stp stp stp stp"
+    reponse: "par pitié viens on l'appel MÉGATRON stp stp stp stp stp stp"
   },
 ];
 
@@ -180,11 +180,10 @@ function PageBof({ navigateTo }) {
   return (
     <div className="page" id="page-bof">
       <h1 className="text_title">A MIMIR</h1>
-      <img
-        src="photos/bof_dog.jpg"
-        alt="bof dog"
-        style={{ width: "200px", height: "auto" }}
-      />
+      <div className="images-row">
+        <img src="photos/mimir1.jpg" alt="mimir1" />
+        <img src="photos/mimir2.jpg" alt="mimir2" />
+      </div>
       <button className="arrow-btn" onClick={() => navigateTo(6)}>
         <ArrowIcon />
       </button>
@@ -195,17 +194,17 @@ function PageBof({ navigateTo }) {
 function PageBridge({ navigateTo }) {
   return (
     <div className="page" id="page-bridge">
-      <h1 className="text_title">OMG NON PAS LE PONT !!!</h1>
+      <h1 className="text_title">ARRRHH NAAAAHHH PAS LE PONT !!!</h1>
+      <div className="images-row">
       <img
         src="photos/bridge.jpeg"
         alt="bridge"
-        style={{ width: "200px", height: "auto" }}
       />
       <img
         src="photos/scream_dog.jpg"
         alt="scream_dog"
-        style={{ width: "200px", height: "auto" }}
       />
+      </div>
       <button className="arrow-btn" onClick={() => navigateTo(6)}>
         <ArrowIcon />
       </button>
