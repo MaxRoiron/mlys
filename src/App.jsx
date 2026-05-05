@@ -1,6 +1,15 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const QUIZ_START_PAGE = 7;
+
+const nonQuizPageAudioSources = {
+  0: "", // PageCoucou
+  1: "", // PageMood
+  2: "", // PageVeryGood
+  3: "", // PageOk
+  4: "", // PageBof
+  5: "", // PageBridge
+};
 
 const quizQuestions = [
   {
@@ -149,7 +158,7 @@ function PageVeryGood({ navigateTo }) {
   return (
     <div className="page" id="page-very-good">
       <h1 className="text_title">Weeeeeeeee</h1>
-      <div className="images-row">
+      <div className="images-row very-good-images">
         <img src="photos/patrick.jpg" alt="patrick" />
         <img src="photos/happy1.jpg" alt="happy1" />
       </div>
@@ -163,11 +172,11 @@ function PageVeryGood({ navigateTo }) {
 function PageOk({ navigateTo }) {
   return (
     <div className="page" id="page-ok">
-      <h1 className="text_title">mhmhmh ok ok !</h1>
+      <h1 className="text_title">MHMHM OK !</h1>
       <img
         src="photos/okok.jpg"
         alt="okok"
-        style={{ width: "200px", height: "auto" }}
+        style={{ width: "600px", height: "auto" }}
       />
       <button className="arrow-btn" onClick={() => navigateTo(6)}>
         <ArrowIcon />
@@ -194,17 +203,28 @@ function PageBof({ navigateTo }) {
 function PageBridge({ navigateTo }) {
   return (
     <div className="page" id="page-bridge">
-      <h1 className="text_title">ARRRHH NAAAAHHH PAS LE PONT !!!</h1>
-      <div className="images-row">
+      <h1 className="text_title bridge-title">ARRRHH NAAAAHHH PAS LE PONT !!!</h1>
       <img
+        className="warning-gif warning-gif-left"
+        src="photos/warning.gif"
+        alt="warning"
+      />
+      {/* <div className="images-row"> */}
+      <img
+        className="bridge-zoom"
         src="photos/bridge.jpeg"
         alt="bridge"
       />
       <img
+        className="warning-gif warning-gif-right"
+        src="photos/warning.gif"
+        alt="warning"
+      />
+      {/* <img
         src="photos/scream_dog.jpg"
         alt="scream_dog"
-      />
-      </div>
+      /> */}
+      {/* </div> */}
       <button className="arrow-btn" onClick={() => navigateTo(6)}>
         <ArrowIcon />
       </button>
@@ -288,10 +308,41 @@ function PageQuizQuestion({ questionData, questionIndex, navigateTo }) {
 export default function App() {
   const [currentPage, setCurrentPage] = useState(0);
   const [pageHistory, setPageHistory] = useState([]);
+  const audioRef = useRef(null);
+
+  function stopCurrentAudio() {
+    if (!audioRef.current) {
+      return;
+    }
+
+    audioRef.current.pause();
+    audioRef.current.currentTime = 0;
+    audioRef.current = null;
+  }
+
+  function playPageAudio(page) {
+    stopCurrentAudio();
+
+    const audioSource = nonQuizPageAudioSources[page];
+    if (!audioSource) {
+      return;
+    }
+
+    const audio = new Audio(audioSource);
+    audioRef.current = audio;
+    audio.play().catch(() => {});
+  }
+
+  useEffect(() => {
+    playPageAudio(currentPage);
+
+    return stopCurrentAudio;
+  }, []);
 
   function navigateTo(nextPage) {
     setPageHistory((history) => [...history, currentPage]);
     setCurrentPage(nextPage);
+    playPageAudio(nextPage);
   }
 
   function goBack() {
@@ -302,6 +353,7 @@ export default function App() {
     const previousPage = pageHistory[pageHistory.length - 1];
     setPageHistory((history) => history.slice(0, -1));
     setCurrentPage(previousPage);
+    playPageAudio(previousPage);
   }
 
   return (

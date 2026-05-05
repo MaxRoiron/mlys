@@ -263,6 +263,65 @@ body {
 .images-row img:last-child {
   width: 400px;
 }
+
+.images-row.very-good-images {
+  justify-content: space-between;
+}
+
+.images-row.very-good-images img:first-child,
+.images-row.very-good-images img:last-child {
+  width: 400px;
+  transform: scale(0.25) rotate(-720deg);
+  animation: imageSpinGrow 1.4s var(--transition) forwards;
+}
+
+.images-row.very-good-images img:last-child {
+  animation-delay: 0.12s;
+}
+
+.bridge-zoom {
+  animation: bridgeZoom 0.5s ease-in-out infinite;
+  transform-origin: center;
+}
+
+.bridge-title {
+  position: fixed;
+  top: 12%;
+}
+
+.warning-gif {
+  position: fixed;
+  top: 50%;
+  width: 300px;
+  height: auto;
+  transform: translateY(-50%);
+  z-index: 5;
+}
+
+.warning-gif-left {
+  left: 32px;
+}
+
+.warning-gif-right {
+  right: 32px;
+}
+
+@keyframes imageSpinGrow {
+  to {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+@keyframes bridgeZoom {
+  0%,
+  100% {
+    transform: scale(1.8);
+  }
+
+  50% {
+    transform: scale(0.5);
+  }
+}
 /* ───── Mobile responsive ───── */
 @media (max-width: 600px) {
   .arrow-btn {
