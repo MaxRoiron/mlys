@@ -1,4 +1,6 @@
-import {useState } from "react";
+import { useState } from "react";
+
+const QUIZ_START_PAGE = 7;
 
 const quizQuestions = [
   {
@@ -11,25 +13,25 @@ const quizQuestions = [
     question: "Question 2\nQuel est ton plat préféré?",
     choices: ["Les pâtes carbos", "La tartiflette au crozet de Stéphanie", "Max (grr)", "Autre (putain max tu connais pas ta copine c'est chaud)"],
     answer: 2,
-    reponse: "Evidemment que c'est ça, quoi d'autre."
+    reponse: "Évidemment que c'est ça, quoi d'autre. Je le savais aussi"
   },
   {
     question: "Question 3\nTu préfères...?",
     choices: ["Te noyer dans l'océan", "Te noyer dans un aquarium mais il est aussi grand que l'océan",
       "Te noyer dans un lac mais c'est comme un aquarium", "Te noyer dans une rivière mais ya pas de courant et c'est comme un aquarium"],
     answer: 3,
-    reponse: "Un choix pas facile"
+    reponse: "Ça c'est de la question qui questionne. (je savais que t'allais choisir ça)"
   },
   {
     question: "Question 4\nPour se murger la gueule, tu prends quoi ?",
     choices: ["Sous vody puff 25k PURPLE WAVE tasty crousty", 
-      "Du vin", "Du vin Blanc", "Du vin rouge"],
+      "Du vin", "Du vin Blanc", "Du vin rouge", "Du vin rosé", "Du vin jaune", "Du vin gris", "ok j'arrête", "De la bière", "JÄGER BOMBA LATINA"],
     answer: 0,
     reponse: "Dans la france à macron???"
   },
   {
     question: "Question 5\nQuel est ton animal préféré ?",
-    choices: ["Le poulpe", "Le chat", "La Musaraigne d'Éthiopie", "Le renard"],
+    choices: ["Le poulpe", "Le chat", "LA MUSARAIGNE D'ÉTHIOPIE (tu sais pas ce que c'est hein)", "Le renard"],
     answer: 3,
     reponse: "Le savais-tu : La Musaraigne d'Éthiopie cache une petite particularité étonnante malgré sa taille minuscule. On a observé que certaines musaraignes de cette espèce peuvent émettre des sons ultrasoniques pour s’orienter dans leur environnement, un peu comme les chauves-souris. Ce n’est pas une “écholocation” aussi sophistiquée, mais cela leur permettrait de mieux naviguer dans les herbes denses ou les terriers sombres où elles vivent."
 
@@ -39,25 +41,26 @@ const quizQuestions = [
     choices: ["Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Sahur",
       "Brim Brim Paftapim", "Chimpanzini BANANINI", "Réponse D"],
     answer: 0,
-    reponse: "zig & sharko"
+    reponse: "Zig & Sharko"
   },
   {
     question: "Dans cette situtation, Je..",
+    image: "photos/code_route.jpg",
     choices: ["Ralentis", "Garde mon allure", "J'accèlere", "J'ai même pas mon code qu'est ce que tu me racontes fdp"],
     answer: 3,
-    reponse: "ébédidonk"
+    reponse: "ÉBÉDIDONK"
   },
   {
     question: "C'est la question CO ! C'est la question QUINE !\nC'est la Queeeessssstioooon COOOOO QUINEEEE!!\nTu préfères...?",
     choices: ["Le 69", "Le 67 (SIIIXX SEVVEENN)", "Ligoté mains/pieds, suspendu, bailloné", "Réponse D"],
     answer: 3,
-    reponse: "Coquine va"
+    reponse: "Sacré coquine va"
   },
   {
     question: "Question 10\nQuelle prénom choisirais-tu pour notre futur chat ?",
     choices: ["Tulip", "Pignouf", "MÉGATRON", "Salaud"],
     answer: 2,
-    reponse: "par pitié mégatron"
+    reponse: "par pitié on l'appel MÉGATRON stp stp stp stp stp stp"
   },
 ];
 
@@ -132,7 +135,7 @@ function PageMood({ navigateTo }) {
         className="arrow-btn"
         onClick={() => {
           if (selectedMood !== null) {
-            navigateTo(selectedMood + 3);
+            navigateTo(selectedMood + 2);
           }
         }}
       >
@@ -142,7 +145,7 @@ function PageMood({ navigateTo }) {
   );
 }
 
-function PageVeryGood() {
+function PageVeryGood({ navigateTo }) {
   return (
     <div className="page" id="page-very-good">
       <h1 className="text_title">Weeeeeeeee</h1>
@@ -150,11 +153,14 @@ function PageVeryGood() {
         <img src="photos/patrick.jpg" alt="patrick" />
         <img src="photos/happy1.jpg" alt="happy1" />
       </div>
+      <button className="arrow-btn" onClick={() => navigateTo(6)}>
+        <ArrowIcon />
+      </button>
     </div>
   );
 }
 
-function PageOk() {
+function PageOk({ navigateTo }) {
   return (
     <div className="page" id="page-ok">
       <h1 className="text_title">mhmhmh ok ok !</h1>
@@ -163,11 +169,14 @@ function PageOk() {
         alt="okok"
         style={{ width: "200px", height: "auto" }}
       />
+      <button className="arrow-btn" onClick={() => navigateTo(6)}>
+        <ArrowIcon />
+      </button>
     </div>
   );
 }
 
-function PageBof() {
+function PageBof({ navigateTo }) {
   return (
     <div className="page" id="page-bof">
       <h1 className="text_title">A MIMIR</h1>
@@ -176,11 +185,14 @@ function PageBof() {
         alt="bof dog"
         style={{ width: "200px", height: "auto" }}
       />
+      <button className="arrow-btn" onClick={() => navigateTo(6)}>
+        <ArrowIcon />
+      </button>
     </div>
   );
 }
 
-function PageBridge() {
+function PageBridge({ navigateTo }) {
   return (
     <div className="page" id="page-bridge">
       <h1 className="text_title">OMG NON PAS LE PONT !!!</h1>
@@ -194,9 +206,86 @@ function PageBridge() {
         alt="scream_dog"
         style={{ width: "200px", height: "auto" }}
       />
+      <button className="arrow-btn" onClick={() => navigateTo(6)}>
+        <ArrowIcon />
+      </button>
     </div>
   );
 }
+
+function PageStartQuiz({ navigateTo }) {
+  return (
+    <div className="page" id="page-start-quiz">
+      <h1 className="text_title">Bon maintenant, petit quizz hehe</h1>
+      <p>t'es prête ?</p>
+      <button className="arrow-btn" onClick={() => navigateTo(QUIZ_START_PAGE)}>
+        <ArrowIcon />
+      </button>
+    </div>
+  );
+}
+
+function PageQuizQuestion({ questionData, questionIndex, navigateTo }) {
+  const [selectedChoice, setSelectedChoice] = useState(null);
+  const [showResponse, setShowResponse] = useState(false);
+
+  function validateAnswer() {
+    if (selectedChoice !== null) {
+      setShowResponse(true);
+    }
+  }
+
+  return (
+    <div className="page quiz-page" id={`page-quiz-${questionIndex + 1}`}>
+      <h1 className="text_title quiz-title">{questionData.question}</h1>
+
+      {questionData.image && (
+        <img className="quiz-image" src={questionData.image} alt="" />
+      )}
+
+      <div className="choices quiz-choices">
+        {questionData.choices.map((choice, index) => (
+          <div className="quiz-choice" key={choice}>
+            <input
+              type="radio"
+              name={`quiz-question-${questionIndex}`}
+              id={`quiz-question-${questionIndex}-choice-${index}`}
+              checked={selectedChoice === index}
+              onChange={() => setSelectedChoice(index)}
+            />
+            <label htmlFor={`quiz-question-${questionIndex}-choice-${index}`}>
+              {choice}
+            </label>
+          </div>
+        ))}
+      </div>
+
+      <div className="quiz-actions">
+        <button
+          className="quiz-btn"
+          disabled={selectedChoice === null}
+          onClick={validateAnswer}
+        >
+          Valider
+        </button>
+
+        {showResponse && (
+          <>
+            <p className="quiz-response">{questionData.reponse}</p>
+            <button
+              className="quiz-btn"
+              onClick={() => navigateTo(QUIZ_START_PAGE + questionIndex + 1)}
+            >
+              Question suivante
+            </button>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
+
 export default function App() {
   const [currentPage, setCurrentPage] = useState(0);
   const [pageHistory, setPageHistory] = useState([]);
@@ -226,10 +315,20 @@ export default function App() {
 
       {currentPage === 0 && <PageCoucou navigateTo={navigateTo} />}
       {currentPage === 1 && <PageMood navigateTo={navigateTo} />}
-      {currentPage === 2 && <PageVeryGood />}
-      {currentPage === 3 && <PageOk />}
-      {currentPage === 4 && <PageBof />}
-      {currentPage === 5 && <PageBridge />}
+      {currentPage === 2 && <PageVeryGood navigateTo={navigateTo} />}
+      {currentPage === 3 && <PageOk navigateTo={navigateTo} />}
+      {currentPage === 4 && <PageBof navigateTo={navigateTo} />}
+      {currentPage === 5 && <PageBridge navigateTo={navigateTo} />}
+      {currentPage === 6 && <PageStartQuiz navigateTo={navigateTo} />}
+      {currentPage >= QUIZ_START_PAGE &&
+        currentPage < QUIZ_START_PAGE + quizQuestions.length && (
+          <PageQuizQuestion
+            key={currentPage}
+            questionData={quizQuestions[currentPage - QUIZ_START_PAGE]}
+            questionIndex={currentPage - QUIZ_START_PAGE}
+            navigateTo={navigateTo}
+          />
+        )}
     </div>
   );
 }
