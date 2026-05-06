@@ -11,6 +11,8 @@ const nonQuizPageAudioSources = {
   5: "", // PageBridge
 };
 
+const QUESTION_MARKS = Array.from({ length: 70 }, (_, index) => index);
+
 const quizQuestions = [
   {
     question: "Question 1\nQuelle est ta couleur préférée ?",
@@ -26,6 +28,8 @@ const quizQuestions = [
   },
   {
     question: "Question 3\nTu préfères...?",
+    imageLayout: "side-question-marks",
+    image: ["photos/nico.png", "photos/ilhan.png"],
     choices: ["Te noyer dans l'océan", "Te noyer dans un aquarium mais il est aussi grand que l'océan",
       "Te noyer dans un lac mais c'est comme un aquarium", "Te noyer dans une rivière mais ya pas de courant et c'est comme un aquarium"],
     answer: 3,
@@ -33,6 +37,8 @@ const quizQuestions = [
   },
   {
     question: "Question 4\nPour se murger la gueule, tu prends quoi ?",
+    imageLayout: "triangle-spin",
+    image: ["photos/vody.png", "photos/tastycrousty.jpeg", "photos/puff.png"],
     choices: ["Sous vody puff 25k PURPLE WAVE tasty crousty", 
       "Du vin", "Du vin Blanc", "Du vin rouge", "Du vin rosé", "Du vin jaune", "Du vin gris", "ok j'arrête", "De la bière", "JÄGER BOMBA LATINA"],
     answer: 0,
@@ -40,6 +46,8 @@ const quizQuestions = [
   },
   {
     question: "Question 5\nQuel est ton animal préféré ?",
+    responseImage: "photos/murasaigne.jpg",
+    responsePointer: "👉",
     choices: ["Le poulpe", "Le chat", "LA MUSARAIGNE D'ÉTHIOPIE (tu sais pas ce que c'est hein)", "Le renard"],
     answer: 3,
     reponse: "Le savais-tu : La Musaraigne d'Éthiopie cache une petite particularité étonnante malgré sa taille minuscule. On a observé que certaines musaraignes de cette espèce peuvent émettre des sons ultrasoniques pour s’orienter dans leur environnement, un peu comme les chauves-souris. Ce n’est pas une “écholocation” aussi sophistiquée, mais cela leur permettrait de mieux naviguer dans les herbes denses ou les terriers sombres où elles vivent."
@@ -47,6 +55,10 @@ const quizQuestions = [
   },
   {
     question: "Question 6 7 SIIIXXX SEVEEEEENNN\nQuel est ton brainrot préféré?",
+    imageLayout: "triangle-before-response",
+    image: ["photos/sahur.webp", "photos/brim.jpeg", "photos/singe.jpg"],
+    responseImage: "photos/zig.jpeg",
+    responseAudio: "",
     choices: ["Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Tung Sahur",
       "Brim Brim Paftapim", "Chimpanzini BANANINI", "Réponse D"],
     answer: 0,
@@ -61,6 +73,9 @@ const quizQuestions = [
   },
   {
     question: "C'est la question CO ! C'est la question QUINE !\nC'est la Queeeessssstioooon COOOOO QUINEEEE!!\nTu préfères...?",
+    imageLayout: "side",
+    image: ["photos/freaky1.jpg", "photos/freaky2.jpg"],
+    questionAudio: "",
     choices: ["Le 69", "Le 67 (SIIIXX SEVVEENN)", "Ligoté mains/pieds, suspendu, bailloné", "Réponse D"],
     answer: 3,
     reponse: "Sacré coquine va"
@@ -209,7 +224,6 @@ function PageBridge({ navigateTo }) {
         src="photos/warning.gif"
         alt="warning"
       />
-      {/* <div className="images-row"> */}
       <img
         className="bridge-zoom"
         src="photos/bridge.jpeg"
@@ -220,11 +234,6 @@ function PageBridge({ navigateTo }) {
         src="photos/warning.gif"
         alt="warning"
       />
-      {/* <img
-        src="photos/scream_dog.jpg"
-        alt="scream_dog"
-      /> */}
-      {/* </div> */}
       <button className="arrow-btn" onClick={() => navigateTo(6)}>
         <ArrowIcon />
       </button>
@@ -244,21 +253,90 @@ function PageStartQuiz({ navigateTo }) {
   );
 }
 
+function getImageList(image) {
+  if (!image) {
+    return [];
+  }
+
+  return Array.isArray(image) ? image : [image];
+}
+
 function PageQuizQuestion({ questionData, questionIndex, navigateTo }) {
   const [selectedChoice, setSelectedChoice] = useState(null);
   const [showResponse, setShowResponse] = useState(false);
+  const quizAudioRef = useRef(null);
+
+  const questionImages = getImageList(questionData.image);
+  const showQuestionMarks = questionData.imageLayout === "side-question-marks";
+  const showSideImages =
+    questionData.imageLayout === "side" ||
+    questionData.imageLayout === "side-question-marks";
+  const showTriangleImages =
+    questionData.imageLayout === "triangle-spin" ||
+    (questionData.imageLayout === "triangle-before-response" && !showResponse);
+
+  function stopQuizAudio() {
+    if (!quizAudioRef.current) {
+      return;
+    }
+
+    quizAudioRef.current.pause();
+    quizAudioRef.current.currentTime = 0;
+    quizAudioRef.current = null;
+  }
+
+  function playQuizAudio(audioSource) {
+    stopQuizAudio();
+
+    if (!audioSource) {
+      return;
+    }
+
+    const audio = new Audio(audioSource);
+    quizAudioRef.current = audio;
+    audio.play().catch(() => {});
+  }
+
+  useEffect(() => {
+    return stopQuizAudio;
+  }, []);
 
   function validateAnswer() {
     if (selectedChoice !== null) {
       setShowResponse(true);
+      playQuizAudio(questionData.responseAudio);
     }
   }
 
   return (
     <div className="page quiz-page" id={`page-quiz-${questionIndex + 1}`}>
+      {showQuestionMarks && (
+        <div className="quiz-question-marks" aria-hidden="true">
+          {QUESTION_MARKS.map((mark) => (
+            <span key={mark}>?</span>
+          ))}
+        </div>
+      )}
+
+      {showSideImages && (
+        <div className="quiz-decorations quiz-side-images" aria-hidden="true">
+          {questionImages.slice(0, 2).map((image) => (
+            <img key={image} src={image} alt="" />
+          ))}
+        </div>
+      )}
+
+      {showTriangleImages && (
+        <div className="quiz-decorations quiz-triangle-images" aria-hidden="true">
+          {questionImages.slice(0, 3).map((image) => (
+            <img key={image} src={image} alt="" />
+          ))}
+        </div>
+      )}
+
       <h1 className="text_title quiz-title">{questionData.question}</h1>
 
-      {questionData.image && (
+      {questionData.image && !questionData.imageLayout && (
         <img className="quiz-image" src={questionData.image} alt="" />
       )}
 
@@ -291,6 +369,20 @@ function PageQuizQuestion({ questionData, questionIndex, navigateTo }) {
         {showResponse && (
           <>
             <p className="quiz-response">{questionData.reponse}</p>
+            {questionData.responseImage && (
+              <div className="quiz-response-media">
+                {questionData.responsePointer && (
+                  <span className="quiz-response-pointer" aria-hidden="true">
+                    {questionData.responsePointer}
+                  </span>
+                )}
+                <img
+                  className="quiz-response-image"
+                  src={questionData.responseImage}
+                  alt=""
+                />
+              </div>
+            )}
             <button
               className="quiz-btn"
               onClick={() => navigateTo(QUIZ_START_PAGE + questionIndex + 1)}
@@ -323,7 +415,10 @@ export default function App() {
   function playPageAudio(page) {
     stopCurrentAudio();
 
-    const audioSource = nonQuizPageAudioSources[page];
+    const quizQuestion = quizQuestions[page - QUIZ_START_PAGE];
+    const audioSource =
+      nonQuizPageAudioSources[page] || quizQuestion?.questionAudio;
+
     if (!audioSource) {
       return;
     }
