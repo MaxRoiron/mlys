@@ -3,7 +3,6 @@
   --bg-primary: #e5e9ee;
   --text-primary: #970b0b;
   --accent: #601414;
-  --response: #29a91b;
   --transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -320,7 +319,6 @@ body {
 .quiz-response {
   max-width: 760px;
   text-align: center;
-  /* color: var(--response); */
   font-weight: bold;
   font-size: 30px;
   line-height: 1.45;
@@ -342,6 +340,91 @@ body {
   width: min(320px, 72vw);
   max-height: 260px;
   object-fit: contain;
+}
+
+.after-quiz-page,
+.reward-page {
+  gap: 22px;
+  text-align: center;
+}
+
+.after-quiz-score {
+  max-width: 680px;
+  white-space: pre-line;
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.after-quiz-note {
+  max-width: 760px;
+  color: var(--text-primary);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.reward-secret-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: min(760px, 92vw);
+}
+
+.reward-secret-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: 1px solid rgba(40, 28, 52, 0.25);
+  border-radius: 8px;
+  background: rgba(70, 48, 91, 0.08);
+  color: var(--accent);
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 1.35;
+  padding: 16px 18px;
+  transition: filter var(--transition), opacity var(--transition);
+}
+
+.reward-secret-text.is-blurred {
+  filter: blur(7px);
+  opacity: 0.8;
+  user-select: none;
+}
+
+.eye-btn {
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(40, 28, 52, 0.25);
+  border-radius: 50%;
+  background: rgba(70, 48, 91, 0.08);
+  color: var(--accent);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition);
+}
+
+.eye-btn:hover {
+  background: rgba(192, 132, 252, 0.18);
+  border-color: rgba(192, 132, 252, 0.5);
+  transform: scale(1.08);
+}
+
+.eye-btn:active {
+  transform: scale(0.95);
+}
+
+.eye-btn svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .images-row {
@@ -481,6 +564,19 @@ body {
 
   .quiz-triangle-images img:nth-child(2) {
     right: 4%;
+  }
+
+  .after-quiz-score,
+  .reward-secret-text {
+    font-size: 23px;
+  }
+
+  .after-quiz-note {
+    font-size: 18px;
+  }
+
+  .reward-secret-row {
+    align-items: flex-start;
   }
 }
 

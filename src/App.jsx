@@ -106,6 +106,15 @@ function BackIcon() {
   );
 }
 
+function EyeIcon() {
+  return (
+    <svg viewBox="0 0 24 24">
+      <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z" />
+      <circle cx="12" cy="12" r="3" />
+    </svg>
+  );
+}
+
 /* ─── Page 1: Coucou ─── */
 function PageCoucou({navigateTo}) {
   return (
@@ -396,6 +405,49 @@ function PageQuizQuestion({ questionData, questionIndex, navigateTo }) {
   );
 }
 
+function PageAfterQuizz({ navigateTo }) {
+  return (
+    <div className="page after-quiz-page" id="page-after-quizz">
+      <h1 className="text_title">Weeee t'as fini le quiz</h1>
+      <p className="after-quiz-score">Bravo, t'as eu 7/10 ! C'est un super score.</p>
+      <p className="after-quiz-note">
+        (mdrrrr j'ai enregistré aucune de tes réponses, tu aurais eu 7/10 quoi qu'il arrive)
+      </p>
+      <button
+        className="arrow-btn"
+        onClick={() => navigateTo(QUIZ_START_PAGE + quizQuestions.length + 1)}
+        aria-label="Voir la récompense"
+      >
+        <ArrowIcon />
+      </button>
+    </div>
+  );
+}
+
+function PageReward() {
+  const [isRewardVisible, setIsRewardVisible] = useState(false);
+  const rewardText = "1897-azeqsdq-qdfqre :)";
+
+  return (
+    <div className="page reward-page" id="page-reward">
+      <h1 className="text_title">Et pour te récompenser :</h1>
+      <div className="reward-secret-row">
+        <p className={`reward-secret-text${isRewardVisible ? "" : " is-blurred"}`}>
+          {rewardText}
+        </p>
+        <button
+          className="eye-btn"
+          type="button"
+          aria-label={isRewardVisible ? "Masquer le texte" : "Afficher le texte"}
+          aria-pressed={isRewardVisible}
+          onClick={() => setIsRewardVisible((visible) => !visible)}
+        >
+          <EyeIcon />
+        </button>
+      </div>
+    </div>
+  );
+}
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState(0);
@@ -475,6 +527,12 @@ export default function App() {
             navigateTo={navigateTo}
           />
         )}
+      {currentPage === QUIZ_START_PAGE + quizQuestions.length && (
+        <PageAfterQuizz navigateTo={navigateTo} />
+      )}
+      {currentPage === QUIZ_START_PAGE + quizQuestions.length + 1 && (
+        <PageReward />
+      )}
     </div>
   );
 }
