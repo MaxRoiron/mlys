@@ -5,10 +5,10 @@ const QUIZ_START_PAGE = 7;
 const nonQuizPageAudioSources = {
   0: "", // PageCoucou
   1: "", // PageMood
-  2: "", // PageVeryGood
-  3: "", // PageOk
-  4: "", // PageBof
-  5: "", // PageBridge
+  2: "sound/Happymusic.mp3", // PageVeryGood
+  3: "sound/Goofy_cool.mp3", // PageOk
+  4: "sound/mimir.mp3", // PageBof
+  5: "sound/alarm.mp3", // PageBridge
 };
 
 const QUESTION_MARKS = Array.from({ length: 70 }, (_, index) => index);
@@ -39,7 +39,7 @@ const quizQuestions = [
     question: "Question 4\nPour se murger la gueule, tu prends quoi ?",
     imageLayout: "triangle-spin",
     image: ["photos/vody.png", "photos/tastycrousty.jpeg", "photos/puff.png"],
-    choices: ["Sous vody puff 25k PURPLE WAVE tasty crousty", 
+    choices: ["Sous vody puff 25k PURPLE WAVE tasty crousty",
       "Du vin", "Du vin Blanc", "Du vin rouge", "Du vin rosé", "Du vin jaune", "Du vin gris", "ok j'arrête", "De la bière", "JÄGER BOMBA LATINA"],
     answer: 0,
     reponse: "Toujours su qu t'étais alcoolique, SALE ALCOOLIQUE"
@@ -116,7 +116,7 @@ function EyeIcon() {
 }
 
 /* ─── Page 1: Coucou ─── */
-function PageCoucou({navigateTo}) {
+function PageCoucou({ navigateTo }) {
   return (
     <div className="page" id="page-coucou">
       <h1 className="text_title">Coucou toi</h1>
@@ -303,7 +303,7 @@ function PageQuizQuestion({ questionData, questionIndex, navigateTo }) {
 
     const audio = new Audio(audioSource);
     quizAudioRef.current = audio;
-    audio.play().catch(() => {});
+    audio.play().catch(() => { });
   }
 
   useEffect(() => {
@@ -426,7 +426,7 @@ function PageAfterQuizz({ navigateTo }) {
 
 function PageReward() {
   const [isRewardVisible, setIsRewardVisible] = useState(false);
-  const rewardText = "1897-azeqsdq-qdfqre :)";
+  const rewardText = "7556-9866-2734\n(bon là c'est un faux code car le site est en pubic, mais dm moi et je te file le vrai!)";
 
   return (
     <div className="page reward-page" id="page-reward">
@@ -477,7 +477,7 @@ export default function App() {
 
     const audio = new Audio(audioSource);
     audioRef.current = audio;
-    audio.play().catch(() => {});
+    audio.play().catch(() => { });
   }
 
   useEffect(() => {
